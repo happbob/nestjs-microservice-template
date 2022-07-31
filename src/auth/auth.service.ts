@@ -8,11 +8,11 @@ import { UserSalt } from 'src/entity/user-salt.entity';
 import { Connection, Repository } from 'typeorm';
 import { SignInRequest } from './dto/sign-in.request';
 import { SignUpRequest } from './dto/sign-up.request';
-import { Payload } from '../../Web/auth/jwt/jwt.payload';
+import { Payload } from './jwt/jwt.payload';
 import {
   saltHashPassword,
   validatePassword,
-} from '../../../config/security.utils';
+} from '../../config/security.utils';
 import { HistoryType, Role, Status } from 'common/variable.utils';
 
 @Injectable()

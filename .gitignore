@@ -2,3 +2,7 @@ Main/logs
 Main/node_modules
 Main/package-lock.json
 Main/dist
+Kafka/logs
+Kafka/node_modules
+Kafka/package-lock.json
+Kafka/dist

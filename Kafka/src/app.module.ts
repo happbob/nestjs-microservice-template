@@ -6,25 +6,9 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { ApiCallHistory } from './entity/api-call-history.entity';
-import { ClientsModule, Transport } from '@nestjs/microservices';
 
 @Module({
   imports: [
-    ClientsModule.register([
-      {
-        name: 'HERO_SERVICE',
-        transport: Transport.KAFKA,
-        options: {
-          client: {
-            clientId: 'hero',
-            brokers: ['localhost:9092'],
-          },
-          consumer: {
-            groupId: 'hero-consumer',
-          },
-        },
-      },
-    ]),
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',

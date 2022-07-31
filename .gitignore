@@ -1,4 +1,4 @@
-logs
-node_modules
-package-lock.json
-dist
+Main/logs
+Main/node_modules
+Main/package-lock.json
+Main/dist

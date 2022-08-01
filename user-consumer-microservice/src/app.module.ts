@@ -3,11 +3,9 @@ import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { AuthModule } from './auth-producer/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { ApiCallHistory } from './entity/api-call-history.entity';
-import { ClientsModule, Transport } from '@nestjs/microservices';
-import { UserModule } from './user-producer/user.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -24,7 +22,6 @@ import { UserModule } from './user-producer/user.module';
       charset: 'utf8mb4',
     }),
     TypeOrmModule.forFeature([ApiCallHistory]),
-    AuthModule,
     UserModule,
   ],
   controllers: [AppController],

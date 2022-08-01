@@ -6,3 +6,7 @@ auth-consumer-microservice/logs
 auth-consumer-microservice/node_modules
 auth-consumer-microservice/package-lock.json
 auth-consumer-microservice/dist
+user-consumer-microservice/logs
+user-consumer-microservice/node_modules
+user-consumer-microservice/package-lock.json
+user-consumer-microservice/dist

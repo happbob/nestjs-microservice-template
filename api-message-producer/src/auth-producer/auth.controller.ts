@@ -7,7 +7,6 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { SignUpUser, SignInUser } from '../decorators/auth.decorator';
-import { AuthService } from './auth.service';
 import { SignInRequest } from './dto/sign-in.request';
 import { SignInResponse } from './dto/sign-in.response';
 import { SignUpRequest } from './dto/sign-up.request';
@@ -18,7 +17,7 @@ import { Client, ClientKafka, Transport } from '@nestjs/microservices';
 @Controller('auth')
 @ApiTags('Auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor() {}
 
   @Client({
     transport: Transport.KAFKA,
@@ -28,7 +27,7 @@ export class AuthController {
         brokers: ['localhost:9092'],
       },
       consumer: {
-        groupId: 'my-kafka-consumer', // Should be the same thing we give in consumer
+        groupId: 'auth-kafka', // Should be the same thing we give in consumer
       },
     },
   })

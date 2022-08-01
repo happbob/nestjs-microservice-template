@@ -27,7 +27,6 @@ export class AuthController {
    */
   @MessagePattern('sign-in')
   postSignIn(@Payload() message) {
-    console.log(message);
     return this.authService.signInUsers(message);
   }
 

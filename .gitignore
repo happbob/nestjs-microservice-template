@@ -1,8 +1,8 @@
-Main/logs
-Main/node_modules
-Main/package-lock.json
-Main/dist
-Auth/logs
-Auth/node_modules
-Auth/package-lock.json
-Auth/dist
+api-message-producer/logs
+api-message-producer/node_modules
+api-message-producer/package-lock.json
+api-message-producer/dist
+auth-consumer-microservice/logs
+auth-consumer-microservice/node_modules
+auth-consumer-microservice/package-lock.json
+auth-consumer-microservice/dist

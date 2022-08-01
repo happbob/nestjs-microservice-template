@@ -2,7 +2,7 @@ Main/logs
 Main/node_modules
 Main/package-lock.json
 Main/dist
-Kafka/logs
-Kafka/node_modules
-Kafka/package-lock.json
-Kafka/dist
+Auth/logs
+Auth/node_modules
+Auth/package-lock.json
+Auth/dist

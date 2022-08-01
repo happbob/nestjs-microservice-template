@@ -26,8 +26,6 @@ export class AppController {
   client: ClientKafka;
 
   async onModuleInit() {
-    // Need to subscribe to topic
-    // so that we can get the response from kafka microservice
     this.client.subscribeToResponseOf('my-first-topic');
     await this.client.connect();
   }

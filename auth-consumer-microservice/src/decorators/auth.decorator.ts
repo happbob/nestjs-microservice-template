@@ -3,6 +3,7 @@ import {
   ExecutionContext,
   HttpException,
 } from '@nestjs/common';
+import { Payload } from '@nestjs/microservices';
 import { regularExp } from 'config/regularExp';
 import { RESPONSE } from 'config/response.utils';
 

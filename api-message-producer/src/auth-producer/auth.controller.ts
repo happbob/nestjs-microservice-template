@@ -13,11 +13,33 @@ import { SignInResponse } from './dto/sign-in.response';
 import { SignUpRequest } from './dto/sign-up.request';
 import { SignUpResponse } from './dto/sign-up.response';
 import { JwtAuthGuard } from './jwt/jwt.guard';
+import { Client, ClientKafka, Transport } from '@nestjs/microservices';
 
 @Controller('auth')
 @ApiTags('Auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
+
+  @Client({
+    transport: Transport.KAFKA,
+    options: {
+      client: {
+        clientId: 'kafkaSample',
+        brokers: ['localhost:9092'],
+      },
+      consumer: {
+        groupId: 'my-kafka-consumer', // Should be the same thing we give in consumer
+      },
+    },
+  })
+  client: ClientKafka;
+
+  async onModuleInit() {
+    this.client.subscribeToResponseOf('sign-in');
+    this.client.subscribeToResponseOf('sign-up');
+    this.client.subscribeToResponseOf('jwt');
+    await this.client.connect();
+  }
 
   /**
    * description : 로그인 API
@@ -69,7 +91,7 @@ export class AuthController {
   @ApiBody({ description: '로그인 DTO', type: SignInRequest })
   @Post('sign-in')
   postSignIn(@Request() req, @SignInUser() signInRequest: SignInRequest) {
-    return this.authService.signInUsers(req, signInRequest);
+    return this.client.send('sign-in', signInRequest);
   }
 
   /**
@@ -130,7 +152,7 @@ export class AuthController {
   @ApiBody({ description: '회원가입 DTO', type: SignUpRequest })
   @Post('sign-up')
   postSignUp(@Request() req, @SignUpUser() signUpRequest: SignUpRequest) {
-    return this.authService.createUsers(req, signUpRequest);
+    return this.client.send('sign-up', signUpRequest);
   }
 
   /**
@@ -163,6 +185,6 @@ export class AuthController {
   })
   @Get('jwt')
   getVerificationJWT(@Request() req) {
-    return this.authService.verficationJWT(req);
+    return this.client.send('jwt', req.user);
   }
 }

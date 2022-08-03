@@ -12,7 +12,7 @@ export class UserService {
     private readonly userRepository: Repository<UserInfo>,
   ) {}
 
-  async retrieveUsers(signInRequest: any) {
+  async retrieveUsers(message: any) {
     try {
       const users = await createQueryBuilder(UserInfo)
         .select(['id', 'email', 'nickname', 'status'])

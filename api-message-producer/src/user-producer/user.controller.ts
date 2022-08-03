@@ -30,7 +30,7 @@ export class UserController {
 
   /**
    * description : User 조회 API
-   * @returns
+   * @returns GetUsersResponse
    */
   @UseGuards(JwtAuthGuard)
   @ApiResponse({
@@ -57,7 +57,7 @@ export class UserController {
     example: 'JWT TOKEN',
   })
   @Get()
-  getVerificationJWT(@Request() req) {
+  getUsers(@Request() req) {
     return this.client.send('users', req.user);
   }
 }

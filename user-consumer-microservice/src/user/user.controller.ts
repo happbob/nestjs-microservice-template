@@ -7,12 +7,12 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   /**
-   * description : 로그인 API
-   * @param SignInRequest
-   * @returns SignInResponse
+   * description : User 조회 API
+   * @param message
+   * @returns GetUsersResponse
    */
   @MessagePattern('users')
-  postSignIn(@Payload() message) {
+  getUsers(@Payload() message) {
     return this.userService.retrieveUsers(message);
   }
 }

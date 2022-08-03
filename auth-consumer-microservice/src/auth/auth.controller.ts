@@ -1,19 +1,7 @@
-import { Controller, Get, Post, Request, UseGuards } from '@nestjs/common';
+import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
-import {
-  ApiBody,
-  ApiHeader,
-  ApiOperation,
-  ApiResponse,
-  ApiTags,
-} from '@nestjs/swagger';
-import { SignUpUser, SignInUser } from '../decorators/auth.decorator';
+import { ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
-import { SignInRequest } from './dto/sign-in.request';
-import { SignInResponse } from './dto/sign-in.response';
-import { SignUpRequest } from './dto/sign-up.request';
-import { SignUpResponse } from './dto/sign-up.response';
-import { JwtAuthGuard } from './jwt/jwt.guard';
 
 @Controller('auth')
 @ApiTags('Auth')
@@ -22,8 +10,8 @@ export class AuthController {
 
   /**
    * description : 로그인 API
-   * @param SignInRequest
-   * @returns SignInResponse
+   * @param message
+   * @returns PostSignInResponse
    */
   @MessagePattern('sign-in')
   postSignIn(@Payload() message) {
@@ -32,8 +20,8 @@ export class AuthController {
 
   /**
    * description : 회원가입 API
-   * @param SignUpRequest
-   * @returns SignUpResponse
+   * @param message
+   * @returns PostSignUpResponse
    */
   @MessagePattern('sign-up')
   postSignUp(@Payload() message) {
@@ -42,7 +30,8 @@ export class AuthController {
 
   /**
    * description : JWT 검증 API
-   * @returns SignInResponse
+   * @param message
+   * @returns PostSignInResponse
    */
   @MessagePattern('jwt')
   getVerificationJWT(@Payload() message) {

@@ -7,10 +7,10 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { SignUpUser, SignInUser } from '../decorators/auth.decorator';
-import { SignInRequest } from './dto/sign-in.request';
-import { SignInResponse } from './dto/sign-in.response';
-import { SignUpRequest } from './dto/sign-up.request';
-import { SignUpResponse } from './dto/sign-up.response';
+import { PostSignInRequest } from './dto/post-sign-in.request';
+import { PostSignInResponse } from './dto/post-sign-in.response';
+import { PostSignUpRequest } from './dto/post-sign-up.request';
+import { PostSignUpResponse } from './dto/post-sign-up.response';
 import { JwtAuthGuard } from './jwt/jwt.guard';
 import { Client, ClientKafka, Transport } from '@nestjs/microservices';
 
@@ -42,13 +42,13 @@ export class AuthController {
 
   /**
    * description : 로그인 API
-   * @param SignInRequest
-   * @returns SignInResponse
+   * @param PostSignInRequest
+   * @returns PostSignInResponse
    */
   @ApiResponse({
     status: 1000,
     description: '성공',
-    type: SignInResponse,
+    type: PostSignInResponse,
   })
   @ApiResponse({
     status: 2013,
@@ -87,21 +87,21 @@ export class AuthController {
     description: '서버 에러',
   })
   @ApiOperation({ summary: '로그인' })
-  @ApiBody({ description: '로그인 DTO', type: SignInRequest })
+  @ApiBody({ description: '로그인 DTO', type: PostSignInRequest })
   @Post('sign-in')
-  postSignIn(@Request() req, @SignInUser() signInRequest: SignInRequest) {
+  postSignIn(@Request() req, @SignInUser() signInRequest: PostSignInRequest) {
     return this.client.send('sign-in', signInRequest);
   }
 
   /**
    * description : 회원가입 API
-   * @param SignUpRequest
-   * @returns SignUpResponse
+   * @param PostSignUpRequest
+   * @returns PostSignUpResponse
    */
   @ApiResponse({
     status: 1000,
     description: '성공',
-    type: SignUpResponse,
+    type: PostSignUpResponse,
   })
   @ApiResponse({
     status: 2004,
@@ -148,21 +148,21 @@ export class AuthController {
     description: '서버 에러',
   })
   @ApiOperation({ summary: '회원가입' })
-  @ApiBody({ description: '회원가입 DTO', type: SignUpRequest })
+  @ApiBody({ description: '회원가입 DTO', type: PostSignUpRequest })
   @Post('sign-up')
-  postSignUp(@Request() req, @SignUpUser() signUpRequest: SignUpRequest) {
+  postSignUp(@Request() req, @SignUpUser() signUpRequest: PostSignUpRequest) {
     return this.client.send('sign-up', signUpRequest);
   }
 
   /**
    * description : JWT 검증 API
-   * @returns SignInResponse
+   * @returns PostSignInResponse
    */
   @UseGuards(JwtAuthGuard)
   @ApiResponse({
     status: 1000,
     description: '성공',
-    type: SignInResponse,
+    type: PostSignInResponse,
   })
   @ApiResponse({
     status: 2000,

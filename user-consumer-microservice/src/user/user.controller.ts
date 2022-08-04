@@ -2,7 +2,7 @@ import { Controller } from '@nestjs/common';
 import { UserService } from './user.service';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 
-@Controller('user')
+@Controller('users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
@@ -12,7 +12,7 @@ export class UserController {
    * @returns GetUsersResponse
    */
   @MessagePattern('users')
-  getUsers(@Payload() message) {
-    return this.userService.retrieveUsers(message);
+  getUsers() {
+    return this.userService.retrieveUsers();
   }
 }

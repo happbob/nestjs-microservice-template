@@ -4,7 +4,6 @@ import { ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 
 @Controller('auth')
-@ApiTags('Auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
@@ -14,8 +13,8 @@ export class AuthController {
    * @returns PostSignInResponse
    */
   @MessagePattern('sign-in')
-  postSignIn(@Payload() message) {
-    return this.authService.signInUsers(message);
+  postSignIn(@Payload() postSignInRequest) {
+    return this.authService.signInUsers(postSignInRequest);
   }
 
   /**
@@ -24,8 +23,8 @@ export class AuthController {
    * @returns PostSignUpResponse
    */
   @MessagePattern('sign-up')
-  postSignUp(@Payload() message) {
-    return this.authService.createUsers(message);
+  postSignUp(@Payload() postSignUpRequest) {
+    return this.authService.createUsers(postSignUpRequest);
   }
 
   /**
@@ -34,7 +33,7 @@ export class AuthController {
    * @returns PostSignInResponse
    */
   @MessagePattern('jwt')
-  getVerificationJWT(@Payload() message) {
-    return this.authService.verficationJWT(message);
+  getVerificationJWT(@Payload() user) {
+    return this.authService.verficationJWT(user);
   }
 }

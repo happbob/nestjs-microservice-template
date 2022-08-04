@@ -6,7 +6,7 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { SignUpUser, SignInUser } from '../decorators/auth.decorator';
+import { PostSignUp, PostSignIn } from '../decorators/auth.decorator';
 import { PostSignInRequest } from './dto/post-sign-in.request';
 import { PostSignInResponse } from './dto/post-sign-in.response';
 import { PostSignUpRequest } from './dto/post-sign-up.request';
@@ -89,8 +89,11 @@ export class AuthController {
   @ApiOperation({ summary: '로그인' })
   @ApiBody({ description: '로그인 DTO', type: PostSignInRequest })
   @Post('sign-in')
-  postSignIn(@Request() req, @SignInUser() signInRequest: PostSignInRequest) {
-    return this.client.send('sign-in', signInRequest);
+  postSignIn(
+    @Request() req,
+    @PostSignIn() postSignInRequest: PostSignInRequest,
+  ) {
+    return this.client.send('sign-in', postSignInRequest);
   }
 
   /**
@@ -150,8 +153,11 @@ export class AuthController {
   @ApiOperation({ summary: '회원가입' })
   @ApiBody({ description: '회원가입 DTO', type: PostSignUpRequest })
   @Post('sign-up')
-  postSignUp(@Request() req, @SignUpUser() signUpRequest: PostSignUpRequest) {
-    return this.client.send('sign-up', signUpRequest);
+  postSignUp(
+    @Request() req,
+    @PostSignUp() postSignUpRequest: PostSignUpRequest,
+  ) {
+    return this.client.send('sign-up', postSignUpRequest);
   }
 
   /**

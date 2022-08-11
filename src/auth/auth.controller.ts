@@ -1,31 +1,37 @@
-import { Controller, Post, Request } from '@nestjs/common';
-import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { RESPONSE } from 'config/response.utils';
+import { Controller, Get, Post, Request, UseGuards } from '@nestjs/common';
+import {
+  ApiBody,
+  ApiHeader,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { SignUpUser, SignInUser } from '../decorators/auth.decorator';
 import { AuthService } from './auth.service';
-import { AdminSignInRequest } from './dto/admin-sign-in.request';
-import { AdminSignInResponse } from './dto/admin-sign-in.response';
-import { AdminSignUpRequest } from './dto/admin-sign-up.request';
-import { AdminSignUpResponse } from './dto/admin-sign-up.response';
+import { SignInRequest } from './dto/sign-in.request';
+import { SignInResponse } from './dto/sign-in.response';
+import { SignUpRequest } from './dto/sign-up.request';
+import { SignUpResponse } from './dto/sign-up.response';
+import { JwtAuthGuard } from './jwt/jwt.guard';
 
-@Controller('admin/auth')
-@ApiTags('Admin Auth')
+@Controller('auth')
+@ApiTags('Auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   /**
    * description : 로그인 API
-   * @param AdminSignInRequest
-   * @returns AdminSignInResponse
+   * @param SignInRequest
+   * @returns SignInResponse
    */
   @ApiResponse({
     status: 1000,
     description: '성공',
-    type: AdminSignInResponse,
+    type: SignInResponse,
   })
   @ApiResponse({
-    status: 2000,
-    description: 'JWT 토큰을 확인해주세요.',
+    status: 2013,
+    description: '존재하지 않는 유저입니다.',
   })
   @ApiResponse({
     status: 2004,
@@ -60,21 +66,21 @@ export class AuthController {
     description: '서버 에러',
   })
   @ApiOperation({ summary: '로그인' })
-  @ApiBody({ description: '로그인 DTO', type: AdminSignInRequest })
+  @ApiBody({ description: '로그인 DTO', type: SignInRequest })
   @Post('sign-in')
-  postSignIn(@Request() req, @SignInUser() signInRequest: AdminSignInRequest) {
-    return this.authService.signInUser(req, signInRequest);
+  postSignIn(@Request() req, @SignInUser() signInRequest: SignInRequest) {
+    return this.authService.signInUsers(req, signInRequest);
   }
 
   /**
    * description : 회원가입 API
-   * @param AdminSignUpRequest
-   * @returns AdminSignUpResponse
+   * @param SignUpRequest
+   * @returns SignUpResponse
    */
   @ApiResponse({
     status: 1000,
     description: '성공',
-    type: AdminSignUpResponse,
+    type: SignUpResponse,
   })
   @ApiResponse({
     status: 2004,
@@ -109,21 +115,54 @@ export class AuthController {
     description: '이미 사용중인 이메일입니다.',
   })
   @ApiResponse({
-    status: 2014,
-    description: '권한을 입력해주세요.',
+    status: 2011,
+    description: '닉네임을 입력해주세요.',
   })
   @ApiResponse({
-    status: 2015,
-    description: '유효하지 않은 권한입니다.',
+    status: 2017,
+    description: '닉네임이 20자를 초과합니다.',
   })
   @ApiResponse({
     status: 4000,
     description: '서버 에러',
   })
   @ApiOperation({ summary: '회원가입' })
-  @ApiBody({ description: '회원가입 DTO', type: AdminSignUpRequest })
+  @ApiBody({ description: '회원가입 DTO', type: SignUpRequest })
   @Post('sign-up')
-  postSignUp(@Request() req, @SignUpUser() signUpRequest: AdminSignUpRequest) {
-    return this.authService.signUpUser(req, signUpRequest);
+  postSignUp(@Request() req, @SignUpUser() signUpRequest: SignUpRequest) {
+    return this.authService.createUsers(req, signUpRequest);
+  }
+
+  /**
+   * description : JWT 검증 API
+   * @returns SignInResponse
+   */
+  @UseGuards(JwtAuthGuard)
+  @ApiResponse({
+    status: 1000,
+    description: '성공',
+    type: SignInResponse,
+  })
+  @ApiResponse({
+    status: 2000,
+    description: 'JWT 토큰을 확인해주세요.',
+  })
+  @ApiResponse({
+    status: 2013,
+    description: '존재하지 않는 유저입니다.',
+  })
+  @ApiResponse({
+    status: 4000,
+    description: '서버 에러',
+  })
+  @ApiOperation({ summary: 'JWT 검증 API' })
+  @ApiHeader({
+    description: 'jwt token',
+    name: 'x-access-token',
+    example: 'JWT TOKEN',
+  })
+  @Get('jwt')
+  getVerificationJWT(@Request() req) {
+    return this.authService.verficationJWT(req);
   }
 }

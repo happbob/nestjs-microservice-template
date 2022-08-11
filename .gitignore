@@ -2,3 +2,16 @@ logs
 node_modules
 package-lock.json
 dist
+api-message-producer/logs
+api-message-producer/node_modules
+api-message-producer/package-lock.json
+api-message-producer/dist
+auth-consumer-microservice/logs
+auth-consumer-microservice/node_modules
+auth-consumer-microservice/package-lock.json
+auth-consumer-microservice/dist
+user-consumer-microservice/logs
+user-consumer-microservice/node_modules
+user-consumer-microservice/package-lock.json
+user-consumer-microservice/dist
+

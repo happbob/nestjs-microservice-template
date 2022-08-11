@@ -26,7 +26,7 @@ export class AuthService {
     private connection: Connection,
   ) {}
 
-  async signInUsers(request: any, signInRequest: SignInRequest) {
+  async signInUsers(signInRequest: SignInRequest) {
     try {
       // 입력한 이메일에 해당하는 유저값 추출
       const user = await this.userRepository.findOne({
@@ -68,13 +68,6 @@ export class AuthService {
       };
 
       const result = makeResponse(RESPONSE.SUCCESS, data);
-      await saveApiCallHistory(
-        HistoryType.READ,
-        Role.USER,
-        '[유저] 로그인 API',
-        request,
-        result,
-      );
 
       return result;
     } catch (error) {
@@ -82,7 +75,7 @@ export class AuthService {
     }
   }
 
-  async createUsers(request: any, signUpRequest: SignUpRequest) {
+  async createUsers(signUpRequest: SignUpRequest) {
     const securityData = saltHashPassword(signUpRequest.password);
     const queryRunner = this.connection.createQueryRunner();
     await queryRunner.connect();
@@ -118,13 +111,6 @@ export class AuthService {
       };
 
       const result = makeResponse(RESPONSE.SUCCESS, data);
-      await saveApiCallHistory(
-        HistoryType.CREATE,
-        Role.USER,
-        '[유저] 회원가입 API',
-        request,
-        result,
-      );
 
       // Commit
       await queryRunner.commitTransaction();
@@ -143,8 +129,8 @@ export class AuthService {
     try {
       //payload값 생성
       const payload: Payload = {
-        id: request.user.id,
-        email: request.user.email,
+        id: request.id,
+        email: request.email,
         role: Role.USER,
       };
 
@@ -154,18 +140,11 @@ export class AuthService {
       // Response의 result 객체에 Data를 담는 부분
       const data = {
         jwt: token,
-        id: request.user.id,
-        email: request.user.email,
+        id: request.id,
+        email: request.email,
       };
 
       const result = makeResponse(RESPONSE.SUCCESS, data);
-      await saveApiCallHistory(
-        HistoryType.READ,
-        Role.USER,
-        '[유저] JWT 검증 API',
-        request,
-        result,
-      );
 
       return result;
     } catch (error) {

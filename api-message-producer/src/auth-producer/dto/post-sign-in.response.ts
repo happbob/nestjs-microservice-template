@@ -4,8 +4,8 @@ import { BaseResponse } from 'config/base.response';
 
 class PostSignInResultData {
   @ApiProperty({
-    example: 'JWT 토큰',
-    description: 'JWT 토큰',
+    example: 'JWT Token',
+    description: 'JWT Token',
     required: true,
   })
   @IsString()
@@ -13,7 +13,7 @@ class PostSignInResultData {
 
   @ApiProperty({
     example: 1,
-    description: '유저 아이디',
+    description: 'User Id',
     required: true,
   })
   @IsNumber()
@@ -21,7 +21,7 @@ class PostSignInResultData {
 
   @ApiProperty({
     example: 'user@email.com',
-    description: '이메일',
+    description: 'Email',
     required: true,
   })
   @IsString()
@@ -30,7 +30,7 @@ class PostSignInResultData {
 
 export abstract class PostSignInResponse extends BaseResponse {
   @ApiProperty({
-    description: 'result 객체',
+    description: 'Result Object',
     required: true,
   })
   @IsArray()

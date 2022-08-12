@@ -6,7 +6,7 @@ import {
 import { regularExp } from 'config/regularExp';
 import { RESPONSE } from 'config/response.utils';
 
-// Auth관련 데코레이터
+// Auth Custom Decorator
 export const PostSignIn = createParamDecorator(
   (data: unknown, ctx: ExecutionContext) => {
     const postSignInData = ctx.switchToHttp().getRequest().body;

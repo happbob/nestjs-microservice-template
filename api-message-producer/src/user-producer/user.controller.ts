@@ -29,28 +29,28 @@ export class UserController {
   }
 
   /**
-   * description : User 조회 API
+   * description : Retrieve User API
    * @returns GetUsersResponse
    */
   @UseGuards(JwtAuthGuard)
   @ApiResponse({
     status: 1000,
-    description: '성공',
+    description: 'Success',
     type: GetUsersResponse,
   })
   @ApiResponse({
     status: 2000,
-    description: 'JWT 토큰을 확인해주세요.',
+    description: 'Please Check JWT Token',
   })
   @ApiResponse({
     status: 2013,
-    description: '존재하지 않는 유저입니다.',
+    description: 'This User Dose Not Exist',
   })
   @ApiResponse({
     status: 4000,
-    description: '서버 에러',
+    description: 'Server Error',
   })
-  @ApiOperation({ summary: 'User 조회 API' })
+  @ApiOperation({ summary: 'Retrieve User API' })
   @ApiHeader({
     description: 'jwt token',
     name: 'x-access-token',

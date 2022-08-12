@@ -27,7 +27,7 @@ export class AuthController {
         brokers: ['localhost:9092'],
       },
       consumer: {
-        groupId: 'auth-kafka', // Should be the same thing we give in consumer
+        groupId: 'auth-kafka',
       },
     },
   })
@@ -41,53 +41,53 @@ export class AuthController {
   }
 
   /**
-   * description : 로그인 API
+   * description : Sign In API
    * @param PostSignInRequest
    * @returns PostSignInResponse
    */
   @ApiResponse({
     status: 1000,
-    description: '성공',
+    description: 'Success',
     type: PostSignInResponse,
   })
   @ApiResponse({
     status: 2013,
-    description: '존재하지 않는 유저입니다.',
+    description: 'This User Dose Not Exist',
   })
   @ApiResponse({
     status: 2004,
-    description: '이메일을 입력해주세요.',
+    description: 'Please Input Email',
   })
   @ApiResponse({
     status: 2005,
-    description: '유효하지 않은 이메일 입니다.',
+    description: 'Invalid Email',
   })
   @ApiResponse({
     status: 2006,
-    description: '비밀번호를 입력해주세요',
+    description: 'Please Input Password',
   })
   @ApiResponse({
     status: 2007,
-    description: '유효하지 않은 비밀번호 입니다.',
+    description: 'Invalid Password',
   })
   @ApiResponse({
     status: 2002,
-    description: '이메일을 확인해주세요',
+    description: 'Please Check Email',
   })
   @ApiResponse({
     status: 2003,
-    description: '비밀번호가 일치하지 않습니다.',
+    description: 'Password Do Not Match',
   })
   @ApiResponse({
     status: 2015,
-    description: '유효하지 않은 권한입니다.',
+    description: 'Invalid Authority',
   })
   @ApiResponse({
     status: 4000,
-    description: '서버 에러',
+    description: 'Server Error',
   })
-  @ApiOperation({ summary: '로그인' })
-  @ApiBody({ description: '로그인 DTO', type: PostSignInRequest })
+  @ApiOperation({ summary: 'Sign In' })
+  @ApiBody({ description: 'Sign In DTO', type: PostSignInRequest })
   @Post('sign-in')
   postSignIn(
     @Request() req,
@@ -97,61 +97,61 @@ export class AuthController {
   }
 
   /**
-   * description : 회원가입 API
+   * description : Sign Up API
    * @param PostSignUpRequest
    * @returns PostSignUpResponse
    */
   @ApiResponse({
     status: 1000,
-    description: '성공',
+    description: 'Success',
     type: PostSignUpResponse,
   })
   @ApiResponse({
     status: 2004,
-    description: '이메일을 입력해주세요.',
+    description: 'Please Input Email',
   })
   @ApiResponse({
     status: 2005,
-    description: '유효하지 않은 이메일 입니다.',
+    description: 'Invalid Email',
   })
   @ApiResponse({
     status: 2006,
-    description: '비밀번호를 입력해주세요.',
+    description: 'Please Input Password',
   })
   @ApiResponse({
     status: 2007,
-    description: '유효하지 않은 비밀번호 입니다.',
+    description: 'Invalid Password',
   })
   @ApiResponse({
     status: 2008,
-    description: '확인 비밀번호를 입력해주세요.',
+    description: 'Please Input Confirm Password',
   })
   @ApiResponse({
     status: 2009,
-    description: '유효하지 않은 확인 비밀번호 입니다.',
+    description: 'Invalid Confirm Password',
   })
   @ApiResponse({
     status: 2010,
-    description: '확인 비밀번호와 일치하지 않습니다.',
-  })
-  @ApiResponse({
-    status: 2012,
-    description: '이미 사용중인 이메일입니다.',
+    description: 'The Confirm Password Does Not Match',
   })
   @ApiResponse({
     status: 2011,
-    description: '닉네임을 입력해주세요.',
+    description: 'Please Input Nickname',
+  })
+  @ApiResponse({
+    status: 2012,
+    description: 'This Email Is Alrealdy In Use',
   })
   @ApiResponse({
     status: 2017,
-    description: '닉네임이 20자를 초과합니다.',
+    description: 'Nickname exceeds 20 Characters',
   })
   @ApiResponse({
     status: 4000,
-    description: '서버 에러',
+    description: 'Server Error',
   })
-  @ApiOperation({ summary: '회원가입' })
-  @ApiBody({ description: '회원가입 DTO', type: PostSignUpRequest })
+  @ApiOperation({ summary: 'Sign Up' })
+  @ApiBody({ description: 'Sign Up DTO', type: PostSignUpRequest })
   @Post('sign-up')
   postSignUp(
     @Request() req,
@@ -161,28 +161,28 @@ export class AuthController {
   }
 
   /**
-   * description : JWT 검증 API
+   * description : Verification JWT API
    * @returns PostSignInResponse
    */
   @UseGuards(JwtAuthGuard)
   @ApiResponse({
     status: 1000,
-    description: '성공',
+    description: 'Success',
     type: PostSignInResponse,
   })
   @ApiResponse({
     status: 2000,
-    description: 'JWT 토큰을 확인해주세요.',
+    description: 'Please Check JWT Token',
   })
   @ApiResponse({
     status: 2013,
-    description: '존재하지 않는 유저입니다.',
+    description: 'This User Dose Not Exist',
   })
   @ApiResponse({
     status: 4000,
-    description: '서버 에러',
+    description: 'Server Error',
   })
-  @ApiOperation({ summary: 'JWT 검증 API' })
+  @ApiOperation({ summary: 'Verification JWT API' })
   @ApiHeader({
     description: 'jwt token',
     name: 'x-access-token',

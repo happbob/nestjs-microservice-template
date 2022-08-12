@@ -21,7 +21,6 @@ async function bootstrap() {
       },
     },
   );
-  // app.useGlobalInterceptors(new HTTPLoggingInterceptor());
 
   await app.listen();
 }

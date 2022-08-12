@@ -8,8 +8,8 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   /**
-   * description : 로그인 API
-   * @param message
+   * description : Sign In API
+   * @param PostSignInRequest
    * @returns PostSignInResponse
    */
   @MessagePattern('sign-in')
@@ -18,8 +18,8 @@ export class AuthController {
   }
 
   /**
-   * description : 회원가입 API
-   * @param message
+   * description : Sign Up API
+   * @param PostSignUpRequest
    * @returns PostSignUpResponse
    */
   @MessagePattern('sign-up')
@@ -28,8 +28,7 @@ export class AuthController {
   }
 
   /**
-   * description : JWT 검증 API
-   * @param message
+   * description : Verification JWT API
    * @returns PostSignInResponse
    */
   @MessagePattern('jwt')

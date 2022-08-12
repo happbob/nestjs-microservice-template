@@ -22,15 +22,15 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: Payload) {
-    // User 정보 추출
+    // Extract User
     const user = await this.userRepository.findOne({
       where: { id: payload.id, status: 'ACTIVE' },
     });
-    // 유저가 존재하지 않는 경우
+    // If User is Non-Exist, Throw Error
     if (user == undefined) {
       throw new HttpException(RESPONSE.NON_EXIST_USER, 201);
     }
-    // payload값 user로 리턴
+    // Return Payload
     return payload;
   }
 }

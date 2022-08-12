@@ -28,22 +28,22 @@ export class AuthService {
 
   async signInUsers(postSignInRequest: PostSignInRequest) {
     try {
-      // 입력한 이메일에 해당하는 유저값 추출
+      // Extract User By Email
       const user = await this.userRepository.findOne({
         where: { email: postSignInRequest.email, status: 'ACTIVE' },
       });
 
-      // 존재하지 않는 유저 체크
+      // Check User
       if (user == undefined) {
         return RESPONSE.NON_EXIST_EMAIL;
       }
 
-      //유저 아이디에 해당하는 Salt값 추출
+      // Extract User Salt By User Id
       const userSalt = await this.userSaltRepository.findOne({
         where: { userId: user.id },
       });
 
-      // Salt값을 이용해서 현재 입력된 비밀번호와 암호화된 비밀번호 검증
+      // Verification Encrypted Password
       if (
         !validatePassword(
           postSignInRequest.password,
@@ -54,17 +54,17 @@ export class AuthService {
         return RESPONSE.NON_MATCH_PASSWORD;
       }
 
-      //payload값 생성
+      // Generate Payload
       const payload: Payload = {
         id: user.id,
         email: postSignInRequest.email,
         role: Role.USER,
       };
 
-      //토큰 생성
+      // Generate JWT Token
       const token = await this.jwtService.sign(payload);
 
-      // Response의 result 객체에 Data를 담는 부분
+      // Input Result Object
       const data = {
         jwt: token,
         id: user.id,
@@ -85,30 +85,30 @@ export class AuthService {
     await queryRunner.connect();
     await queryRunner.startTransaction();
     try {
-      // 가입한 이메일이 존재하는지 체크
+      // Check User By Email
       const isExistUserByEmail = await this.userRepository.count({
         where: { email: postSignUpRequest.email, status: 'ACTIVE' },
       });
 
-      // user 정보가 있는지 체크
+      // Check User By Email
       if (isExistUserByEmail > 0) {
         return RESPONSE.EXIST_EMAIL;
       }
 
-      // UserInfo 인스턴스 생성후, 정보 담는 부분
+      // Generate UserInfo Class And Input Data
       const userInfo = new UserInfo();
       userInfo.email = postSignUpRequest.email;
       userInfo.password = securityData.hashedPassword;
       userInfo.nickname = postSignUpRequest.nickname;
       const createUserData = await queryRunner.manager.save(userInfo);
 
-      // UserSalt 인스턴스 생성후, 정보 담는 부분
+      // Generate UserSalt Class And Input Data
       const userSalt = new UserSalt();
       userSalt.salt = securityData.salt;
       userSalt.userId = createUserData.id;
       await queryRunner.manager.save(userSalt);
 
-      // Response의 result 객체에 Data를 담는 부분
+      // Input Result Object
       const data = {
         id: createUserData.id,
         email: createUserData.email,
@@ -125,23 +125,24 @@ export class AuthService {
       await queryRunner.rollbackTransaction();
       return RESPONSE.ERROR;
     } finally {
+      // Release
       await queryRunner.release();
     }
   }
 
   async verficationJWT(user: Payload) {
     try {
-      //payload값 생성
+      // Generate Payload
       const payload: Payload = {
         id: user.id,
         email: user.email,
         role: Role.USER,
       };
 
-      //토큰 생성
+      // Generate JWT Token
       const token = await this.jwtService.sign(payload);
 
-      // Response의 result 객체에 Data를 담는 부분
+      // Input Result Object
       const data = {
         jwt: token,
         id: user.id,

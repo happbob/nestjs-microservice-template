@@ -7,8 +7,7 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   /**
-   * description : User 조회 API
-   * @param message
+   * description : Retrieve User API
    * @returns GetUsersResponse
    */
   @MessagePattern('users')

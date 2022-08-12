@@ -11,13 +11,17 @@ import { UserModule } from './user-producer/user.module';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      envFilePath: `${__dirname}/../../config/env/.${process.env.NODE_ENV}.env`,
+      isGlobal: true,
+    }),
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'localhost',
+      host: process.env.DATABASE_HOST,
       port: 3306,
-      username: 'root',
-      password: 'kooki7869^^',
-      database: 'test',
+      username: process.env.DATABASE_USER,
+      password: process.env.DATABASE_PASSWORD,
+      database: process.env.DATABASE_NAME,
       entities: [__dirname + '/**/entity/*.entity{.ts,.js}'],
       synchronize: true,
       bigNumberStrings: false,

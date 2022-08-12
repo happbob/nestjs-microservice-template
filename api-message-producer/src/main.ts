@@ -29,6 +29,6 @@ async function bootstrap() {
     swaggerOptions: { defaultModelsExpandDepth: -1 },
   });
 
-  await app.listen(3030);
+  await app.listen(process.env.PORT_NUMBER);
 }
 bootstrap();

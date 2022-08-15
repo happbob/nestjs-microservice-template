@@ -1,4 +1,11 @@
-import { Controller, Get, Post, Request, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Request,
+  UseGuards,
+  UsePipes,
+} from '@nestjs/common';
 import {
   ApiBody,
   ApiHeader,
@@ -13,6 +20,7 @@ import { PostSignUpRequest } from './dto/post-sign-up.request';
 import { PostSignUpResponse } from './dto/post-sign-up.response';
 import { JwtAuthGuard } from './jwt/jwt.guard';
 import { Client, ClientKafka, Transport } from '@nestjs/microservices';
+import { ValidationPipe } from 'config/pipe/validation.pipe';
 
 @Controller('auth')
 @ApiTags('Auth')
@@ -87,8 +95,13 @@ export class AuthController {
     description: 'Server Error',
   })
   @ApiOperation({ summary: 'Sign In' })
-  @ApiBody({ description: 'Sign In DTO', type: PostSignInRequest })
+  @ApiBody({
+    description: 'Sign In DTO',
+    type: PostSignInRequest,
+    required: false,
+  })
   @Post('sign-in')
+  @UsePipes(new ValidationPipe())
   postSignIn(
     @Request() req,
     @PostSignIn() postSignInRequest: PostSignInRequest,

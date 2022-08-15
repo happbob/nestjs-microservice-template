@@ -1,9 +1,5 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { secret } from 'config/secret';
-import { DocumentBuilder, OpenAPIObject, SwaggerModule } from '@nestjs/swagger';
-import * as expressBasicAuth from 'express-basic-auth';
-import { HTTPLoggingInterceptor } from 'common/logger/logger.interceptor';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 
 async function bootstrap() {

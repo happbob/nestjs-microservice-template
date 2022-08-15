@@ -1,6 +1,5 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { secret } from 'config/secret';
 import { DocumentBuilder, OpenAPIObject, SwaggerModule } from '@nestjs/swagger';
 import * as expressBasicAuth from 'express-basic-auth';
 import { HTTPLoggingInterceptor } from 'common/logger/logger.interceptor';
@@ -13,7 +12,7 @@ async function bootstrap() {
     expressBasicAuth({
       challenge: true,
       users: {
-        cookie: secret.swagger_password,
+        cookie: process.env.SWAGGER_PASSWORD,
       },
     }),
   );

@@ -2,10 +2,10 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsArray, IsNumber, IsString } from 'class-validator';
 import { BaseResponse } from 'config/base.response';
 
-class SignInResponseData {
+class PostSignInResultData {
   @ApiProperty({
-    example: 'JWT 토큰',
-    description: 'JWT 토큰',
+    example: 'JWT Token',
+    description: 'JWT Token',
     required: true,
   })
   @IsString()
@@ -13,7 +13,7 @@ class SignInResponseData {
 
   @ApiProperty({
     example: 1,
-    description: '유저 아이디',
+    description: 'User Id',
     required: true,
   })
   @IsNumber()
@@ -21,18 +21,18 @@ class SignInResponseData {
 
   @ApiProperty({
     example: 'user@email.com',
-    description: '이메일',
+    description: 'Email',
     required: true,
   })
   @IsString()
   email: string;
 }
 
-export abstract class SignInResponse extends BaseResponse {
+export abstract class PostSignInResponse extends BaseResponse {
   @ApiProperty({
-    description: 'result 객체',
+    description: 'Result Object',
     required: true,
   })
   @IsArray()
-  result: SignInResponseData;
+  result: PostSignInResultData;
 }

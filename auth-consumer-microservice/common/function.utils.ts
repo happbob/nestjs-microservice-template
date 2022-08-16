@@ -3,7 +3,7 @@ import { RESPONSE } from 'config/response.utils';
 import { getManager } from 'typeorm';
 
 /**
- * description : response를 만들어 주는 함수, result에 들어갈 것이 없다면 undefined 입력해야함
+ * description : Make Response Function. If There Is Nothing To Enter The Result, You Must Enter undefined
  * @param response
  * @param data
  * @returns object
@@ -14,7 +14,7 @@ export function makeResponse(response: any, data: any | any[] | undefined) {
 }
 
 /**
- * description : 권한 체크 함수
+ * description : Authority Check Function
  * @param authority
  * @param list
  * @returns boolean
@@ -27,12 +27,12 @@ export function ApiAuthorityCheck(authority: string, list: string[]) {
 }
 
 /**
- * description : ApiCallHistory에 로그 저장하는 함수
- * historyType : HistoryType ENUM에서 C, R, U, D에 맞게 넣으면 됩니다.
- * userType : UserType ENUM에서 유저에 맞게 넣으면 됩니다.
- * apiName : 각 도메인+controller에 작성되어있는 Swagger의 API명을 넣으면 됩니다.
- * req : request 객체를 넣으면 됩니다.
- * res : makeResponse()를 통해 만들어진 response를 넣으면 됩니다.
+ * description : Save ApiCallHistory Table Function
+ * historyType : Input HistoryType ENUM(CREATE, READ, UPDATE, DELETE)
+ * userType : Input UserType ENUM
+ * apiName : Input API Name
+ * req : Request Object
+ * res : Response Object from makeResponse Function
  */
 export async function saveApiCallHistory(
   historyType: string,
@@ -46,19 +46,19 @@ export async function saveApiCallHistory(
   let pathVariable = null;
   let body = null;
   try {
-    // 유저의 아이디가 있는지 검사하는 로직
+    // Check User
     if (req.user != undefined) {
       id = req.user.id;
     }
-    // query string이 있는지 검사하는 로직
+    // Check Query String
     if (req.query != undefined) {
       queryString = req.query;
     }
-    // path variable이 있는지 검사하는 로직
+    // Check Path
     if (req.params != undefined) {
       pathVariable = req.params;
     }
-    // body가 있는지 검사하는 로직
+    // Check Body
     if (req.body != undefined) {
       body = req.body;
     }

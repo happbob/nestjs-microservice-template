@@ -1,51 +1,38 @@
-import { Controller, Get, Post, Request, UseGuards } from '@nestjs/common';
+import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
-import {
-  ApiBody,
-  ApiHeader,
-  ApiOperation,
-  ApiResponse,
-  ApiTags,
-} from '@nestjs/swagger';
-import { SignUpUser, SignInUser } from '../decorators/auth.decorator';
+import { ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
-import { SignInRequest } from './dto/sign-in.request';
-import { SignInResponse } from './dto/sign-in.response';
-import { SignUpRequest } from './dto/sign-up.request';
-import { SignUpResponse } from './dto/sign-up.response';
-import { JwtAuthGuard } from './jwt/jwt.guard';
 
 @Controller('auth')
-@ApiTags('Auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   /**
-   * description : 로그인 API
-   * @param SignInRequest
-   * @returns SignInResponse
+   * description : Sign In API
+   * @param PostSignInRequest
+   * @returns PostSignInResponse
    */
   @MessagePattern('sign-in')
-  postSignIn(@Payload() message) {
-    return this.authService.signInUsers(message);
+  postSignIn(@Payload() postSignInRequest) {
+    return this.authService.signInUsers(postSignInRequest);
   }
 
   /**
-   * description : 회원가입 API
-   * @param SignUpRequest
-   * @returns SignUpResponse
+   * description : Sign Up API
+   * @param PostSignUpRequest
+   * @returns PostSignUpResponse
    */
   @MessagePattern('sign-up')
-  postSignUp(@Payload() message) {
-    return this.authService.createUsers(message);
+  postSignUp(@Payload() postSignUpRequest) {
+    return this.authService.createUsers(postSignUpRequest);
   }
 
   /**
-   * description : JWT 검증 API
-   * @returns SignInResponse
+   * description : Verification JWT API
+   * @returns PostSignInResponse
    */
   @MessagePattern('jwt')
-  getVerificationJWT(@Payload() message) {
-    return this.authService.verficationJWT(message);
+  getVerificationJWT(@Payload() user) {
+    return this.authService.verficationJWT(user);
   }
 }

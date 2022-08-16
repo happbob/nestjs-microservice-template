@@ -6,56 +6,56 @@ import {
 import { regularExp } from 'config/regularExp';
 import { RESPONSE } from 'config/response.utils';
 
-// Auth관련 데코레이터
-export const SignInUser = createParamDecorator(
+// Auth Custom Decorator
+export const PostSignIn = createParamDecorator(
   (data: unknown, ctx: ExecutionContext) => {
-    const body = ctx.switchToHttp().getRequest().body;
-    if (!body.email) {
+    const postSignInData = ctx.switchToHttp().getRequest().body;
+    if (!postSignInData.email) {
       throw new HttpException(RESPONSE.EMPTY_EMAIL, 201);
     }
-    if (!regularExp.emailRegex.test(body.email)) {
+    if (!regularExp.emailRegex.test(postSignInData.email)) {
       throw new HttpException(RESPONSE.INVALID_EMAIL, 201);
     }
-    if (!body.password) {
+    if (!postSignInData.password) {
       throw new HttpException(RESPONSE.EMPTY_PASSWORD, 201);
     }
-    if (!regularExp.passwordRegex.test(body.password)) {
+    if (!regularExp.passwordRegex.test(postSignInData.password)) {
       throw new HttpException(RESPONSE.INVALID_PASSWORD, 201);
     }
-    return body;
+    return postSignInData;
   },
 );
 
-export const SignUpUser = createParamDecorator(
+export const PostSignUp = createParamDecorator(
   (data: unknown, ctx: ExecutionContext) => {
-    const body = ctx.switchToHttp().getRequest().body;
-    if (!body.email) {
+    const postSignUpData = ctx.switchToHttp().getRequest().body;
+    if (!postSignUpData.email) {
       throw new HttpException(RESPONSE.EMPTY_EMAIL, 201);
     }
-    if (!regularExp.emailRegex.test(body.email)) {
+    if (!regularExp.emailRegex.test(postSignUpData.email)) {
       throw new HttpException(RESPONSE.INVALID_EMAIL, 201);
     }
-    if (!body.password) {
+    if (!postSignUpData.password) {
       throw new HttpException(RESPONSE.EMPTY_PASSWORD, 201);
     }
-    if (!regularExp.passwordRegex.test(body.password)) {
+    if (!regularExp.passwordRegex.test(postSignUpData.password)) {
       throw new HttpException(RESPONSE.INVALID_PASSWORD, 201);
     }
-    if (!body.confirmPassword) {
+    if (!postSignUpData.confirmPassword) {
       throw new HttpException(RESPONSE.EMPTY_CONFIRM_PASSWORD, 201);
     }
-    if (!regularExp.passwordRegex.test(body.confirmPassword)) {
+    if (!regularExp.passwordRegex.test(postSignUpData.confirmPassword)) {
       throw new HttpException(RESPONSE.INVALID_CONFIRM_PASSWORD, 201);
     }
-    if (body.password !== body.confirmPassword) {
+    if (postSignUpData.password !== postSignUpData.confirmPassword) {
       throw new HttpException(RESPONSE.NOT_MATCH_CONFIRM_PASSWORD, 201);
     }
-    if (!body.nickname) {
+    if (!postSignUpData.nickname) {
       throw new HttpException(RESPONSE.EMPTY_NICKNAME, 201);
     }
-    if (body.nickname.length > 20) {
+    if (postSignUpData.nickname.length > 20) {
       throw new HttpException(RESPONSE.INVALID_NICKNAME, 201);
     }
-    return body;
+    return postSignUpData;
   },
 );

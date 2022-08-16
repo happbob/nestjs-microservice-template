@@ -5,7 +5,7 @@ import { BaseResponse } from 'config/base.response';
 class Users {
   @ApiProperty({
     example: 1,
-    description: '유저 아이디',
+    description: 'User Id',
     required: true,
   })
   @IsNumber()
@@ -13,15 +13,15 @@ class Users {
 
   @ApiProperty({
     example: 'user@email.com',
-    description: '이메일',
+    description: 'Email',
     required: true,
   })
   @IsString()
   email: string;
 
   @ApiProperty({
-    example: '쿠키',
-    description: '닉네임',
+    example: 'Bob',
+    description: 'Nickname',
     required: false,
   })
   @IsString()
@@ -29,7 +29,7 @@ class Users {
 
   @ApiProperty({
     example: 'ACTIVE',
-    description: '회원 상태',
+    description: 'User Status',
     required: true,
   })
   @IsString()
@@ -38,7 +38,7 @@ class Users {
 
 class GetUsersResultData {
   @ApiProperty({
-    description: '유저 객체 리스트',
+    description: 'User Object List',
     type: Users,
     required: true,
     isArray: true,
@@ -49,7 +49,7 @@ class GetUsersResultData {
 
 export abstract class GetUsersResponse extends BaseResponse {
   @ApiProperty({
-    description: 'result 객체',
+    description: 'Result Object',
     required: true,
   })
   @IsArray()

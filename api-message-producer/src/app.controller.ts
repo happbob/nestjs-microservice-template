@@ -7,7 +7,5 @@ import { Client, ClientKafka, Transport } from '@nestjs/microservices';
 @Controller()
 @ApiTags('Main')
 export class AppController {
-  constructor(
-    private readonly appService: AppService, // private readonly jwtService: JwtService,
-  ) {}
+  constructor(private readonly appService: AppService) {}
 }

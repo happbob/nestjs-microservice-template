@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString } from 'class-validator';
 
-export class SignUpRequest {
+export class PostSignInRequest {
   @ApiProperty({
     example: 'user@email.com',
     description: 'email',
@@ -17,20 +17,4 @@ export class SignUpRequest {
   })
   @IsString()
   password: string;
-
-  @ApiProperty({
-    example: 'user1234',
-    description: 'confirm password',
-    required: true,
-  })
-  @IsString()
-  confirmPassword: string;
-
-  @ApiProperty({
-    example: '쿠키',
-    description: 'nickname',
-    required: true,
-  })
-  @IsString()
-  nickname: string;
 }

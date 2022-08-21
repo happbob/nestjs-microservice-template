@@ -12,7 +12,7 @@ import { UserModule } from './user-producer/user.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: `${__dirname}/../../config/env/.${process.env.NODE_ENV}.env`,
+      envFilePath: `${__dirname}/../../.env`,
       isGlobal: true,
     }),
     TypeOrmModule.forRoot({

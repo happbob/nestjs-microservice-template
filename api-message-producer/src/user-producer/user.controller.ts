@@ -13,8 +13,9 @@ export class UserController {
     transport: Transport.KAFKA,
     options: {
       client: {
-        clientId: 'kafkaSample',
-        brokers: ['localhost:9092'],
+        clientId: 'KAFKA',
+        // ssl: true,
+        brokers: ['kafka-internal.io:9092'],
       },
       consumer: {
         groupId: 'user-kafka', // Should be the same thing we give in consumer

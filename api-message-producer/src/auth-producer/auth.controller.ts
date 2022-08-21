@@ -31,8 +31,9 @@ export class AuthController {
     transport: Transport.KAFKA,
     options: {
       client: {
-        clientId: 'kafkaSample',
-        brokers: ['localhost:9092'],
+        clientId: 'KAFKA',
+        // ssl: true,
+        brokers: ['kafka-internal.io:9092'],
       },
       consumer: {
         groupId: 'auth-kafka',
@@ -45,7 +46,11 @@ export class AuthController {
     this.client.subscribeToResponseOf('sign-in');
     this.client.subscribeToResponseOf('sign-up');
     this.client.subscribeToResponseOf('jwt');
-    await this.client.connect();
+    try {
+      await this.client.connect();
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   /**
